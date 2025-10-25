@@ -1,4 +1,5 @@
 import { GDBrowserAPI } from "@cass-modules/GDBrowserAPI";
+import { fetchThumbnail, Quality } from "@cass-modules/GDLevelThumbnail";
 import { SpectralCMDHome } from "@cassidy/spectral-home";
 import { abbreviateNumber, UNISpectra } from "@cassidy/unispectra";
 
@@ -8,7 +9,7 @@ const gdcmd = defineCommand({
     otherNames: ["dash", "geometrydash", "gdbrowser"],
     category: "Utilities",
     description: "Anything related to GDBrowser.",
-    version: "1.1.1",
+    version: "1.1.2",
     icon: "🛠️",
     author: "@lianecagara",
   },
@@ -63,9 +64,9 @@ const gdoptions = new SpectralCMDHome({ isHypen: false }, [
           ),
           `✅ Reply with a **number** between **1** to **5** to view the level information.`,
         ].join(`\n${UNISpectra.standardLine}\n`);
-        const res = await output.reply(
-          mapped.length === 1 ? "No Results." : mapped
-        );
+        const res = await output.reply({
+          body: mapped.length === 1 ? "No Results." : mapped,
+        });
         res.atReply(async (ctxRep) => {
           const { input: input2, output: output2 } = ctxRep;
           output2.setStyle(gdcmd.style);
@@ -108,6 +109,7 @@ const gdoptions = new SpectralCMDHome({ isHypen: false }, [
         await output.reaction("⏳");
         const level = await GDBrowserAPI.level(ID);
         const getLikeEmo = (likes: number) => (likes < 0 ? `👎` : `👍`);
+        const thumb = await fetchThumbnail(Number(level.id), Quality.High);
         const mapped = `**${level.name}** (#${level.id})\n${
           UNISpectra.arrow
         } By ${level.author}\n\n${
@@ -128,7 +130,10 @@ const gdoptions = new SpectralCMDHome({ isHypen: false }, [
           UNISpectra.standardLine
         }\n(To view comments, reply with a page **number** like 1)`;
 
-        const res = await output.reply(mapped);
+        const res = await output.reply({
+          body: mapped,
+          attachment: thumb ?? undefined,
+        });
         const onRep = async (repCtx: CommandContext) => {
           const { input, output } = repCtx;
           output.setStyle(gdcmd.style);
