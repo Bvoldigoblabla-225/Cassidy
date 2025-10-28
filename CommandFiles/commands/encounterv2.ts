@@ -24,7 +24,7 @@ export const meta: CommandMeta = {
   otherNames: ["encv2", "encounterv2", "enc"],
   version: "2.1.12",
   usage: "{prefix}{name} [id | 'new']",
-  category: "Spinoff Games",
+  category: "Pet Games",
   author: "@lianecagara",
   role: 0,
   noPrefix: false,

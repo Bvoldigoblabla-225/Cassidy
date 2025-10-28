@@ -110,7 +110,7 @@ export async function entry({
     let result = ``;
 
     for (const category of sortedCategories) {
-      result += `${UNISpectra.arrowFromT} 📁 **${category}** (${categorizedCommands[category].length})\n`;
+      result += `${UNISpectra.arrowFromB} 📁 **${category}** (${categorizedCommands[category].length})\n`;
       for (const command of categorizedCommands[category]) {
         const { name, icon, shopPrice = 0 } = command.meta;
         const role = await extractCommandRole(command);
@@ -130,7 +130,6 @@ export async function entry({
         let isAllowed =
           (!shopPrice || shop.isUnlocked(name)) && input.hasRole(role);
         if (!isAllowed) {
-          continue;
         }
         result += `${statusIcon} ${toTitleCase(name)},   `;
       }

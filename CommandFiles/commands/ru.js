@@ -8,7 +8,7 @@ export const meta = {
   version: "1.0.0",
   waitingTime: 5,
   description: "Russian Roulette game with betting mechanics!",
-  category: "Risk Games",
+  category: "Gambling Games",
   usage: "{prefix}{name} <bet>",
   requirement: "3.0.0",
   icon: "🎲",

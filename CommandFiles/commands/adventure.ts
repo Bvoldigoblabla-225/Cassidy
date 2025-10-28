@@ -137,7 +137,7 @@ export const meta: CommandMeta = {
   author: "Aljur Pogoy",
   version: "1.0.0",
   usage: "{prefix}adventure <action> [args]",
-  category: "Adventure",
+  category: "Idle Investment Games",
   role: 0,
   noPrefix: false,
   waitingTime: 1,

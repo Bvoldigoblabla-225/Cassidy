@@ -32,7 +32,6 @@ export const meta: CommandMeta = {
   otherNames: ["fbdl"],
   requirement: "2.5.0",
   icon: "🎥",
-  shopPrice: 0,
 };
 
 async function fetchFacebookVideo(

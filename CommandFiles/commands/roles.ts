@@ -11,7 +11,7 @@ export const meta: CommandMeta = {
   otherNames: ["setrole", "changerole", "sr"],
   version: "1.0.0",
   usage: "{prefix}{name}",
-  category: "Thread",
+  category: "Moderation",
   author: "@lianecagara",
   role: 1,
   noPrefix: false,

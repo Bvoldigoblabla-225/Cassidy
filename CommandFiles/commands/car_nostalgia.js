@@ -14,7 +14,7 @@ export const meta = {
   otherNames: ["c", "car", "carn"],
   version: "1.0.10",
   usage: "{prefix}{name} <command> [args]",
-  category: "Simulation Games",
+  category: "Idle Investment Games",
   author: "JenicaDev & Liane Cagara",
   role: 0,
   noPrefix: false,

@@ -7,7 +7,7 @@ export const meta: CommandMeta = {
   otherNames: ["rule", "rulz", "law"],
   version: "1.0.0",
   usage: "{prefix}{name} [add|remove|list] [...args]",
-  category: "Thread",
+  category: "Moderation",
   author: "@lianecagara",
   role: 1,
   noPrefix: false,

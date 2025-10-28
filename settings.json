@@ -1,6 +1,7 @@
 {
-  "DISABLE_GAMES": true,
+  "DISABLE_GAMES": false,
   "NOTES_1": [
+    "You can disable pre-made games if you do not want it.",
     "Please configure the PREFIX, ADMINBOT, also make sure the knownURL is set to your server url without trailing /",
     "You can do noFB: true, to disable facebook login.",
     "100075058221244 is not required in ADMINBOT.",

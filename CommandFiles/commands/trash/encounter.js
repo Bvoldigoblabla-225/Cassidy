@@ -11,7 +11,7 @@ export const meta = {
   otherNames: ["encv1", "enc", "encounter"],
   version: "1.0.2",
   usage: "{prefix}{name}",
-  category: "Spinoff Games",
+  category: "Pet",
   author: "@lianecagara",
   permissions: [0],
   noPrefix: "both",

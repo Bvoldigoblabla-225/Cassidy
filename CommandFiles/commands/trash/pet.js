@@ -12,7 +12,7 @@ export const meta = {
   otherNames: ["p", "pet"],
   version: "1.6.1",
   usage: "{prefix}{name}",
-  category: "Idle Investment Games",
+  category: "Pet Games",
   author: "Liane Cagara | JenicaDev",
   permissions: [0],
   noPrefix: "both",

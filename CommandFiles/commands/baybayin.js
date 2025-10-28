@@ -14,7 +14,6 @@ export const meta = {
   role: 0,
   noPrefix: false,
   waitingTime: 2,
-  shopPrice: 100,
   requirement: "3.0.0",
   icon: "✏️",
 };

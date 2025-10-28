@@ -12,7 +12,7 @@ export const meta = {
   author: "@lianecagara",
   version: "1.0.0",
   usage: "{prefix}duel <pet name>",
-  category: "Spinoff Games",
+  category: "Pet Games",
   role: 0,
   noPrefix: false,
   waitingTime: 1,

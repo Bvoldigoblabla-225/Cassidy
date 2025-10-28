@@ -10,7 +10,7 @@ export const meta: CommandMeta = {
   otherNames: ["oshot"],
   version: "1.0.4",
   usage: "{prefix}{name} [bet_amount] [pet]",
-  category: "Spinoff Games",
+  category: "Pet Games",
   author: "@lianecagara",
   permissions: [0],
   noPrefix: false,

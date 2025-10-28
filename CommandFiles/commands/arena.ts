@@ -11,7 +11,7 @@ export const meta: CommandMeta = {
   otherNames: ["pvp", "battle"],
   version: "1.4.2",
   usage: "{prefix}{name} [pet] [--ai]",
-  category: "Spinoff Games",
+  category: "Pet Games",
   author: "@lianecagara",
   role: 0,
   noPrefix: false,

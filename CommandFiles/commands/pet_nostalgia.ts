@@ -18,7 +18,7 @@ export const meta: CommandMeta = {
   otherNames: ["p", "petn"],
   version: "1.6.12",
   usage: "{prefix}{name}",
-  category: "Idle Investment Games",
+  category: "Pet Games",
   author: "@lianecagara",
   permissions: [0],
   noPrefix: false,

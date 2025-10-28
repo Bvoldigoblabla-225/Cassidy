@@ -11,7 +11,7 @@ export const meta: CommandMeta = {
   otherNames: ["pfx", "changeprefix", "sprefix", "pref"],
   version: "1.0.0",
   usage: "{prefix}{name} [newPrefix]",
-  category: "Thread",
+  category: "Moderation",
   author: "@lianecagara",
   permissions: [0],
   noPrefix: false,

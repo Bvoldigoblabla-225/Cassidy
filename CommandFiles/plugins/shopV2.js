@@ -66,7 +66,11 @@ export class ShopClass {
    */
   isUnlocked(commandName) {
     commandName = String(commandName).toLowerCase();
-    return commandName in this.shopInv || this.getPrice(commandName) === 0;
+    return (
+      !Cassidy.allowGames ||
+      commandName in this.shopInv ||
+      this.getPrice(commandName) === 0
+    );
   }
 
   /**

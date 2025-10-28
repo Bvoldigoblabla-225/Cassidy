@@ -13,7 +13,7 @@ const command = defineCommand({
     waitingTime: 3,
     requirement: "3.0.0",
     icon: "⚡",
-    category: "User Management",
+    category: "User",
   },
   style: {
     title: "Active Users ⚡",

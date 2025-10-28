@@ -12,7 +12,6 @@ export const meta = {
   author: "@lianecagara",
   permissions: [0],
   noPrefix: false,
-  shopPrice: 500000,
   requirement: "3.0.0",
   icon: "🎨",
 };
