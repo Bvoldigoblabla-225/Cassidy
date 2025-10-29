@@ -7,7 +7,7 @@ export const meta = {
   author: "@lianecagara",
   version: "1.0.0",
   description: "Support Group Chat!",
-  otherNames: ["supportgc", "gc"],
+  otherNames: ["support", "gc"],
   usage: "{prefix}{name}",
   category: "Support",
   permissions: [0],

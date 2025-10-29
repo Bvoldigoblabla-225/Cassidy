@@ -490,6 +490,43 @@ export function formatTimeSentence(ms: number, showMs = false): string {
   return `${parts.slice(0, -1).join(", ")}, and ${parts[parts.length - 1]}`;
 }
 
+export function formatTimeSentenceV2(
+  ms: number,
+  { abbr = false } = {}
+): string {
+  const baseUnits = [
+    { label: abbr ? "y" : "year", ms: 365 * 24 * 60 * 60 * 1000 },
+    { label: abbr ? "d" : "day", ms: 24 * 60 * 60 * 1000 },
+    { label: abbr ? "h" : "hour", ms: 60 * 60 * 1000 },
+    { label: abbr ? "m" : "minute", ms: 60 * 1000 },
+    { label: abbr ? "s" : "second", ms: 1000 },
+  ];
+
+  const allUnits = baseUnits;
+
+  const parts: string[] = [];
+
+  let remainingMs = ms;
+
+  for (const { label, ms: unitMs } of allUnits) {
+    const value = Math.floor(remainingMs / unitMs);
+    if (value > 0) {
+      parts.push(
+        `${value}${abbr ? "" : " "}${label}${value > 1 && !abbr ? "s" : ""}`
+      );
+      remainingMs %= unitMs;
+    }
+  }
+
+  if (parts.length === 0) return "";
+
+  if (parts.length === 1) return parts[0];
+  if (parts.length === 2) return `${parts[0]} ${abbr ? "" : "and "}${parts[1]}`;
+  return `${parts.slice(0, -1).join(abbr ? " " : ", ")}${abbr ? "" : ","} ${
+    abbr ? "" : "and "
+  }${parts[parts.length - 1]}`;
+}
+
 export function getMinimumChange(total: number) {
   const exp = Math.floor(Math.log2(Math.abs(total)));
   return Math.pow(2, exp - 52);
