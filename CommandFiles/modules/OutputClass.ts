@@ -372,7 +372,7 @@ export class OutputClass implements OutputProps {
    * @param thread - Optional thread to add the user to.
    * @returns A promise resolving when the operation is complete.
    */
-  add(user: string, thread: string = this.#ctx.event?.threadID): Promise<void> {
+  add(user: string, thread: string = this.#ctx.input?.threadID): Promise<void> {
     return this.api.addUserToGroup(user, thread, (_err) => {});
   }
 
@@ -384,7 +384,7 @@ export class OutputClass implements OutputProps {
    */
   kick(
     user: string,
-    thread: string = this.#ctx.event?.threadID
+    thread: string = this.#ctx.input?.threadID
   ): Promise<void> {
     return this.api.removeUserFromGroup(user, thread, (_err) => {});
   }
@@ -427,7 +427,7 @@ export class OutputClass implements OutputProps {
             repObj: PromiseStandardReplyArg<T>;
           }
         ) => any | Promise<any>),
-    mid: string = this.#ctx.event?.messageID
+    mid: string = this.#ctx.input?.messageID
   ) {
     if (typeof emojiOrListener === "function") {
       if (!this.LASTID) {
@@ -685,7 +685,7 @@ export class OutputClass implements OutputProps {
     const append = this.#append;
     const prepend = this.#prepend;
     const { STYLE } = this;
-    const { input, event } = obj;
+    const { input, input: event } = obj;
     const styler = obj.input.isCommand ? obj.styler : obj.stylerDummy;
     const newMid = `web:mid-${Date.now()}`;
     if (typeof text === "object") {
