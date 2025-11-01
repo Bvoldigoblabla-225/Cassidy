@@ -826,7 +826,7 @@ export default class UserStatsManager {
 
   async getAvatarURL(uid: string) {
     await this.ensureAvatarURL(uid);
-    return (await this.getCache(uid)).avatarURL;
+    return (await this.getCache(uid)).avatarURL || this.fallbackAva;
   }
 
   /**
