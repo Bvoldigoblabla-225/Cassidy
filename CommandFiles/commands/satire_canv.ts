@@ -65,6 +65,7 @@ export async function entry({
 
   const i = await output.reply("⏳ ***Generating***\n\nPlease wait...");
 
+  await usersDB.ensureUserInfo(uid);
   const info = await usersDB.getUserInfo(uid);
 
   const name = info?.name ?? userName;
@@ -81,7 +82,7 @@ export async function entry({
       await utils.delay(500);
       const pfp = await loadImage(bg);
       await canv.drawImage(pfp, canv.left, canv.top, {
-        height: canv.height,
+        width: canv.width,
       });
 
       const bottomHalf = CanvCass.createRect({
