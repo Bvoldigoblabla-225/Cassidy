@@ -1,5 +1,4 @@
 import { CanvCass } from "@cass-modules/CassieahExtras";
-import { loadImage } from "@napi-rs/canvas";
 
 export const meta: CommandMeta = {
   name: "snews",
@@ -88,7 +87,7 @@ export async function entry({
       const margin = 55;
 
       await utils.delay(500);
-      const pfp = await loadImage(bg);
+      const pfp = await CanvCass.loadImage(bg);
       await canv.drawImage(pfp, canv.left, canv.top, {
         width: canv.width,
         maximizeFit: true,

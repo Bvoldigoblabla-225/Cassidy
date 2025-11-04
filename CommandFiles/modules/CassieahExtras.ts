@@ -554,6 +554,33 @@ export class CanvCass implements CanvCass.Rect {
     ctx.restore();
   }
 
+  drawFromPath(
+    path: Path2D,
+    style?: {
+      fill?: CanvCass.Color;
+      stroke?: CanvCass.Color;
+      strokeWidth?: number;
+    }
+  ) {
+    const ctx = this.#context;
+    const { fill, stroke, strokeWidth } = style;
+
+    ctx.save();
+
+    if (stroke) {
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = Number(strokeWidth ?? "1");
+      ctx.stroke(path);
+    }
+
+    if (fill) {
+      ctx.fillStyle = fill;
+      ctx.fill(path);
+    }
+
+    ctx.restore();
+  }
+
   /**
    * Draws a 360° circle with the specificed cx, cy and radius.
    * @param center
@@ -572,8 +599,8 @@ export class CanvCass implements CanvCass.Rect {
   drawCircle(config: CanvCass.DrawCircleParam): void;
 
   drawCircle(
-    arg1: [number, number] | CanvCass.DrawCircleParam,
-    arg2?: number,
+    arg1: [number, number] | CanvCass.DrawCircleParam | Path2D,
+    arg2?: number | CanvCass.DrawCircleParamN,
     arg3?: CanvCass.DrawCircleParamN
   ): void {
     let centerX: number;
@@ -581,7 +608,8 @@ export class CanvCass implements CanvCass.Rect {
     let radius: number;
     let style: CanvCass.DrawParam = {};
 
-    if (
+    if (arg1 instanceof Path2D && typeof arg2 !== "number") {
+    } else if (
       typeof arg1 === "number" &&
       typeof arg2 === "number" &&
       typeof arg3 !== "number"
@@ -590,7 +618,11 @@ export class CanvCass implements CanvCass.Rect {
       centerY = arg2;
       radius = arg3?.radius ?? 0;
       style = arg3 ?? {};
-    } else if (Array.isArray(arg1) && typeof arg3 !== "number") {
+    } else if (
+      Array.isArray(arg1) &&
+      typeof arg3 !== "number" &&
+      typeof arg2 === "number"
+    ) {
       centerX = arg1[0];
       centerY = arg1[1];
       radius = arg2 ?? 0;
