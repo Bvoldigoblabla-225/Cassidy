@@ -50,6 +50,9 @@ export async function entry({
   const pfpURL = await usersDB.getAvatarURL(uid);
 
   let [argsText, bg] = input.splitArgs("|");
+  if (bg && !input.isAdmin) {
+    return output.reply(`❌ Only bot admin can specify URL.`);
+  }
   bg ||= input.replier?.attachmentUrls[0];
   bg ||= pfpURL;
 
@@ -81,7 +84,7 @@ export async function entry({
     times++;
     try {
       const canv = new CanvCass(720, 720);
-      const margin = 45;
+      const margin = 55;
 
       await utils.delay(500);
       const pfp = await loadImage(bg);
@@ -98,12 +101,33 @@ export async function entry({
       });
       const gradient = canv.createDim(bottomHalf, { color: "rgba(0,0,0,1)" });
       canv.drawBox({ rect: bottomHalf, fill: gradient });
+
+      const headlineRect = CanvCass.createRect({
+        top: canv.bottom - 200,
+        left: margin,
+        width: canv.width - margin * 2,
+        height: 100,
+      });
+      const headlineResult = canv.drawText(headline, {
+        align: "left",
+        vAlign: "top",
+        baseline: "middle",
+        fontType: "cbold",
+        size: 35,
+        fill: "white",
+        x: headlineRect.left,
+        breakTo: "top",
+        y: headlineRect.bottom,
+        breakMaxWidth: headlineRect.width,
+        yMargin: 4,
+      });
+
       if (isBgDifferent || 1) {
         const cw = (canv.width - margin * 2) / 3;
 
         const circleBox = CanvCass.createRect({
           left: canv.left + margin,
-          centerY: canv.centerY,
+          bottom: headlineResult.rect.bottom + headlineResult.lineHeight,
           width: cw,
           height: cw,
         });
@@ -122,26 +146,6 @@ export async function entry({
 
         canv.drawCircle(ccc, r, { stroke: CanvCass.colorA, strokeWidth: 5 });
       }
-
-      const headlineRect = CanvCass.createRect({
-        top: canv.bottom - 200,
-        left: margin,
-        width: canv.width - margin * 2,
-        height: 100,
-      });
-      canv.drawText(headline, {
-        align: "left",
-        vAlign: "top",
-        baseline: "middle",
-        fontType: "cbold",
-        size: 35,
-        fill: "white",
-        x: headlineRect.left,
-        breakTo: "top",
-        y: headlineRect.bottom,
-        breakMaxWidth: headlineRect.width,
-        yMargin: 4,
-      });
 
       const lineH = 4;
       const lineTop = headlineRect.bottom + 20;

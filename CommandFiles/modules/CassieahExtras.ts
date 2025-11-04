@@ -757,27 +757,30 @@ export class CanvCass implements CanvCass.Rect {
     x: number,
     y: number,
     options?: Partial<CanvCass.DrawTextParam>
-  ): void;
+  ): CanvCass.DrawTextResult;
 
   /**
    * Another High-Level function that fills text and breaking the text automatically if a width is specified.
    * @param text The content
    * @param options X, Y and customization like align, vAlign, breakMaxWidth and breakTo.
    */
-  drawText(text: string, options: Partial<CanvCass.DrawTextParam>): void;
+  drawText(
+    text: string,
+    options: Partial<CanvCass.DrawTextParam>
+  ): CanvCass.DrawTextResult;
 
   /**
    * Another High-Level function that fills text and breaking the text automatically if a width is specified.
    * @param config Text, X, Y and customization like align, vAlign, breakMaxWidth and breakTo.
    */
-  drawText(config: CanvCass.DrawTextParam): void;
+  drawText(config: CanvCass.DrawTextParam): CanvCass.DrawTextResult;
 
   drawText(
     arg1: string | CanvCass.DrawTextParam,
     arg2?: number | Partial<CanvCass.DrawTextParam>,
     arg3?: number,
     arg4?: Partial<CanvCass.DrawTextParam>
-  ): void {
+  ): CanvCass.DrawTextResult {
     const ctx = this.#context;
 
     let text: string;
@@ -823,6 +826,7 @@ export class CanvCass implements CanvCass.Rect {
       breakTo = "bottom",
       breakMaxWidth = Infinity,
     } = options;
+    const origY = y;
 
     if (vAlign === "top") {
       y -= size / 2;
@@ -841,13 +845,14 @@ export class CanvCass implements CanvCass.Rect {
     ctx.textAlign = align;
     ctx.textBaseline = baseline;
 
-    const lines = this.splitBreak(
+    let { lines, maxWidth } = this.splitBreakDetailed(
       {
         ...options,
         text,
       },
       breakMaxWidth
-    ).filter(Boolean);
+    );
+    lines = lines.filter(Boolean);
 
     let tx = x;
     let ty = y;
@@ -855,6 +860,8 @@ export class CanvCass implements CanvCass.Rect {
     if (breakTo === "top") {
       lines.reverse();
     }
+
+    const linePos: [number, number][] = [];
 
     for (const line of lines) {
       if (stroke) {
@@ -866,10 +873,77 @@ export class CanvCass implements CanvCass.Rect {
         ctx.fillStyle = fill;
         ctx.fillText(line, tx, ty);
       }
+      linePos.push([tx, ty]);
       ty += lineHeight * direction;
     }
 
+    const rect = CanvCass.createRect({
+      width: maxWidth,
+      height: Math.abs(y - tx),
+      ...(breakTo === "bottom"
+        ? {
+            top: origY,
+          }
+        : {}),
+      ...(breakTo === "top"
+        ? {
+            bottom: origY,
+          }
+        : {}),
+      ...(align === "left"
+        ? {
+            left: x,
+          }
+        : {}),
+      ...(align === "right"
+        ? {
+            right: x,
+          }
+        : {}),
+      ...(align === "center"
+        ? {
+            centerX: x,
+          }
+        : {}),
+
+      ...(align === "start"
+        ? {
+            left: x,
+          }
+        : {}),
+      ...(align === "end"
+        ? {
+            right: x,
+          }
+        : {}),
+    });
+
     ctx.restore();
+
+    const result: CanvCass.DrawTextResult = {
+      lines,
+      rect,
+      text,
+      linePos,
+      fill,
+      lineHeight,
+      direction,
+      stroke,
+      strokeWidth,
+      cssFont: font,
+      align,
+      baseline,
+      vAlign,
+      size,
+      yMargin,
+      breakTo,
+      breakMaxWidth,
+      x,
+      y: origY,
+      newY: y,
+      fontType: options.fontType,
+    };
+    return result;
   }
 
   /**
@@ -1023,7 +1097,68 @@ export class CanvCass implements CanvCass.Rect {
 
     return lines;
   }
-
+  /**
+   * Splits lines based on max width and text config.
+   * @param style
+   * @param maxW
+   * @returns
+   */
+  splitBreakDetailed(style: CanvCass.MeasureTextParam, maxW: number) {
+    const lines: string[] = [];
+    const widths: number[] = [];
+    const paragraphs = style.text.split("\n");
+    for (const paragraph of paragraphs) {
+      let words = paragraph.split(" ");
+      let currentLine = "";
+      let accuW = 0;
+      for (let word of words) {
+        let wordWidth = this.measureText({ ...style, text: word }).width;
+        while (wordWidth > maxW) {
+          let splitIndex = word.length;
+          while (splitIndex > 0) {
+            const part = word.slice(0, splitIndex) + "-";
+            const partWidth = this.measureText({ ...style, text: part }).width;
+            if (partWidth <= maxW) break;
+            splitIndex--;
+          }
+          const part = word.slice(0, splitIndex) + "-";
+          lines.push(currentLine ? currentLine + " " + part : part);
+          widths.push(
+            this.measureText({
+              ...style,
+              text: currentLine ? currentLine + " " + part : part,
+            }).width
+          );
+          currentLine = "";
+          word = word.slice(splitIndex);
+          wordWidth = this.measureText({ ...style, text: word }).width;
+        }
+        const addSpace = currentLine ? " " : "";
+        const totalWidth =
+          accuW + this.measureText({ ...style, text: addSpace + word }).width;
+        if (totalWidth > maxW) {
+          if (currentLine) {
+            lines.push(currentLine);
+            widths.push(accuW);
+          }
+          currentLine = word;
+          accuW = this.measureText({ ...style, text: word }).width;
+        } else {
+          currentLine += addSpace + word;
+          accuW = totalWidth;
+        }
+      }
+      if (currentLine) {
+        lines.push(currentLine);
+        widths.push(accuW);
+      }
+    }
+    const maxWidth = Math.max(...widths);
+    return {
+      lines,
+      maxWidth,
+    };
+  }
   splitBreakOld(style: CanvCass.MeasureTextParam, maxW: number) {
     let accuW = 0;
     const text = style.text;
@@ -1285,6 +1420,15 @@ export namespace CanvCass {
   export interface DrawCircleParamN extends DrawParam {
     center?: [number, number];
     radius?: number;
+  }
+
+  export interface DrawTextResult extends DrawTextParam {
+    rect: Rect;
+    lines: string[];
+    linePos: [number, number][];
+    lineHeight: number;
+    direction: number;
+    newY: number;
   }
 
   export interface DrawTextParam {
