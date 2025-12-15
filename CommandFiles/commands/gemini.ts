@@ -1,6 +1,6 @@
-¥system install gemini.ts /*
+/*
  * @XaviaCMD
- * @rapido
+ * @Christus
  * API switched to Aryan Chauhan
  */
 
