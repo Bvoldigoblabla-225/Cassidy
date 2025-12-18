@@ -69,7 +69,7 @@
   "autoCreateDB": true,
   "MongoConfig": {
     "status": false,
-    "uri": "mongodb+srv://Christus:voldigo225@cluster0.vydujqt.mongodb.net/?appName=Cluster0",
+    "uri": "mongodb+srv://Christus:voldigo225@cluster0.a3zrgor.mongodb.net/?appName=Cluster0",
     "note": "DO NOT MODIFY THIS IF YOU DO NOT KNOW WHAT YOU WERE DOING. They serve as .env keys for mongo uri."
   },
   "credentials": {
