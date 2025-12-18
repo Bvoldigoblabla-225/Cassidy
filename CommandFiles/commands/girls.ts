@@ -21,7 +21,7 @@ export const meta: CommandMeta = {
 };
 
 export const style: CommandStyle = {
-  title: "Astral • Sexy Girl 🌌",
+  title: "Christus • Sexy Girl 🌌",
   titleFont: "bold",
   contentFont: "fancy",
 };
