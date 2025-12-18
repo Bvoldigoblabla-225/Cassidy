@@ -19,7 +19,7 @@ export const meta: CommandMeta = {
 };
 
 export const style: CommandStyle = {
-  title: "Astral • AI Photo Generator 🤖",
+  title: "CHRISTUS • AI Photo Generator 🤖",
   titleFont: "bold",
   contentFont: "fancy",
 };
@@ -49,7 +49,7 @@ function formatMessage() {
 ${UNISpectra.standardLine}
 ${UNISpectra.charm} AI Image Generated
 ${UNISpectra.standardLine}
-${UNISpectra.charm} CassidyAstral-Midnight 🌃 ${UNISpectra.charm}
+${UNISpectra.charm} ChristusBot-Midnight 🏂 ${UNISpectra.charm}
 [ Transmission from Astral Command ]`;
 }
 
