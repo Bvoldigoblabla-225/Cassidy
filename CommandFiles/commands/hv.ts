@@ -22,7 +22,7 @@ export const meta: CommandMeta = {
   version: "1.0.0",
   usage: "{prefix}{name}",
   category: "NSFW",
-  role: 0,
+  role: 2,
   noPrefix: false,
   waitingTime: 5,
   requirement: "3.0.0",
