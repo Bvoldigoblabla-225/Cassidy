@@ -10,7 +10,7 @@ export const meta = {
   version: "1.0.0",
   usage: "{prefix}{name}",
   category: "NSFW",
-  permissions: [0],
+  permissions: [2],
   waitingTime: 5,
   otherNames: [],
   icon: "🔥",
