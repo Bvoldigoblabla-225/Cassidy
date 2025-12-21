@@ -14,7 +14,7 @@ export const meta: CommandMeta = {
   description: "Generate MidJourney-style AI images",
   category: "AI",
   usage: "{prefix}{name} <prompt>",
-  role: 0,
+  role: 2,
   waitingTime: 15,
   icon: "🎨",
   noLevelUI: true,
@@ -158,4 +158,4 @@ export async function reply({
     await output.unsend(wait.messageID);
     output.reply("❌ Processing failed.");
   }
-                 }
+    }
