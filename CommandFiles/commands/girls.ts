@@ -1,5 +1,3 @@
-// CommandFiles/commands/girls.ts
-
 import { defineEntry } from "@cass/define";
 import fs from "fs-extra";
 import path from "path";
@@ -33,7 +31,7 @@ export const langs = {
 };
 
 async function fetchGirlImage() {
-  const url = "https://delirius-apiofc.vercel.app/nsfw/girls";
+  const url = "https://api.delirius.store/nsfw/girls";
   const response = await axios.get(url, { responseType: "arraybuffer" });
   const imgPath = path.join(__dirname, "cache", `girl_${Date.now()}.jpg`);
   await fs.ensureDir(path.dirname(imgPath));
