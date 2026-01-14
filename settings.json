@@ -20,7 +20,7 @@
     "TITLE_PATTERN": "{emojis}【 {word} 】{emojis}"
   },
   "LOGO": "𝐂𝐇𝐑𝐈𝐒𝐓𝐔𝐒 𝐁𝐎𝐓",
-  "ADMINBOT": ["61580333625022", "61568791604271","100085921601707"],
+  "ADMINBOT": ["61580333625022", "61568791604271"],
   "EXTRAPREFIX": ["§","¥"],
   "MODERATORBOT": [],
   "exitOnError": false,
